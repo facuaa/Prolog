@@ -28,3 +28,9 @@ pertenece(X,[_|Y]):- pertenece(X,Y).
     % Generar las consultas
     % pertenece(c,[a,c,b,c,d]).
     % pertenece(X, [a,b,c]), pertenece(X, [d,c,b]).
+
+
+conc([],L,L).
+
+conc([X|R1],L2,[X|R]):-
+ conc(R1,L2,R).
