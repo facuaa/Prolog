@@ -30,8 +30,7 @@ pertenece(X,[_|Y]):- pertenece(X,Y).
 
 
 conc([],L,L).
-conc([X|R1],L,[X|R]):-
-conc(R1,L,R).
+conc([X|R1],L,[X|R]):- conc(R1,L,R).
 
     % I. ¿Qué lista hay que añadirle a la lista [a, b] para obtener [a, b, c, d]?
         % [c,d]
@@ -174,3 +173,49 @@ suma_lista_recu_cola(Lista, Retorno):- suma_lista_recu_cola(Lista, 0, Retorno).
 suma_lista_recu_cola([],Acum,Acum):- !.
 suma_lista_recu_cola([X|XS],Acum, S):- Nuevo is Acum + X, suma_lista_recu_cola(XS,Nuevo,S).
 
+
+pertenece_recu_cola(X,[X|_]):- !.
+pertenece_recu_cola(X,[_|XS]):- pertenece_recu_cola(X,XS).
+
+
+
+
+concat_acu(L1, L2, Resultado) :- concat_acu_aux(L1, L2, [], ResultadoRev), reverse(ResultadoRev, Resultado).
+
+concat_acu_aux([], L2, Acu, Resultado) :- reverse(L2, L2Rev), append(L2Rev, Acu, Resultado).
+
+concat_acu_aux([X|Xs], L2, Acu, Resultado) :- concat_acu_aux(Xs, L2, [X|Acu], Resultado).
+
+
+
+
+cuentaR(Lista,Retorno):- cuentaR(Lista,Retorno,0).
+cuentaR([],R,R):- !.
+cuentaR([X|Xs],S, Acum):- NuevoA is Acum + X, cuentaR(Xs,S,NuevoA). 
+
+
+
+
+%palindromo(+L).
+pali(A):- reverse(A,R), R=A.
+
+paliR(Lista):- inversas(Lista, X), X==Lista.
+
+inversas(L,Y):- inversas(L,Y,[]).
+inversas([],Y,Y).
+inversas([X|Xs], Retor, Acum):- inversas(Xs,Retor,[X|Acum]). 
+
+duplicaR(L1, L2):- duplicaR(L1,[],L2s), reverse(L2s,L2).
+duplicaR([],Retorno, Retorno):- !.
+duplicaR([X|Xs],Acum,Retorno):- duplicaR(Xs,[X, X|Acum], Retorno).
+
+
+
+
+mayorNR(Ele,L,Lretor):- mayorNR(Ele,L,Lretor1,[]), reverse(Lretor1,Lretor).
+
+mayorNR(_, [], Acum, Acum):- !.
+
+mayorNR(RS,[X|Xs],Ret, Acum):- RS >= X, mayorNR(RS, Xs, Ret, Acum). 
+
+mayorNR(RS, [X|Xs], Ret, Acum):- RS < X, mayorNR(RS, Xs, Ret, [X|Acum]).
